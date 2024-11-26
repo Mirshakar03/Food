@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-class User(AbstractUser):
+class Users(AbstractUser):
     phone_number = models.CharField(max_length=20, unique=True)
     address = models.TextField()
     postal_code = models.CharField(max_length=10)
@@ -12,7 +12,7 @@ class User(AbstractUser):
         return self.username
 
 class Card(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     card_number = models.CharField(max_length=20)
     expiry_date = models.DateField()
     CVV = models.PositiveIntegerField()
@@ -23,7 +23,7 @@ class Card(models.Model):
 
 
 class Contact(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     email = models.EmailField()
     subject = models.CharField(max_length=50)
@@ -34,7 +34,7 @@ class Contact(models.Model):
         return f"Message from {self.name}"
 
 class Payment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     pyment_type = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
